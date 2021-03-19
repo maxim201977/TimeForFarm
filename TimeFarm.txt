@@ -1,0 +1,21 @@
+if(Serial.available() > 0) 
+ { 
+ String s = Serial.readStringUntil('\r'); 
+ int delimeter_index = s.indexOf(':'); 
+ hours_now = s.substring(0, delimeter_index).toInt(); 
+ minutes_now = s.substring(delimeter_index+1).toInt(); 
+ 
+ char buf[16]; 
+ sprintf(buf, "%02d:%02d", hours_now, minutes_now); 
+ Serial.println(buf); 
+ 
+ int time_now = (hours_now*60 + minutes_now); 
+ 
+ if (prev_time < day_start_minutes() && time_now >= day_start_minutes()) {//540 500 
+ Serial.println("LOW"); 
+ } else if (prev_time < night_start_minutes() && time_now >= night_start_minutes()) {//1220 1280 
+ Serial.println("HIGH"); 
+ } 
+ 
+ prev_time = time_now; 
+ }
