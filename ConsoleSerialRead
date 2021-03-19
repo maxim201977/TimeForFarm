@@ -1,0 +1,7 @@
+if (Serial.available() > 0) { 
+ String buffer_command = Serial.readStringUntil('\r'); 
+ int delimeter_index = buffer_command.indexOf(' '); 
+ command = buffer_command.substring(0, delimeter_index); 
+ parametr = buffer_command.substring(delimeter_index+1);
+ Serial.println(command + ": " + parametr); 
+ }
